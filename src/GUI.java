@@ -6,40 +6,13 @@ import java.awt.event.ActionListener;
 public class GUI implements ActionListener {
     private JComboBox<String> teamsDropdown;
 
-    //Home Page
+
     public GUI(){
 
-        //Button Creation
-        JButton TeamOption= new JButton("Team Gambling");
-        TeamOption.setBackground(Color.BLUE);
-        TeamOption.setForeground(Color.RED);
-        TeamOption.setOpaque(true);
-        TeamOption.setActionCommand("TeamOption");
-        TeamOption.addActionListener(this);
-
-
-
-        //Frame and panel creation
-        JFrame frame= new JFrame("Odds Calculator");
-        JPanel panel=new JPanel();
-        panel.add(TeamOption);
-        panel.setBackground(Color.LIGHT_GRAY);
-
-        frame.add(panel);
-        frame.setSize(800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-
-
-    }
-
-    //When Team Button Is Pressed
-    public void teamOption(){
-        JFrame frame=new JFrame();
+        JFrame frame= new JFrame("Gambling Odds Calculator");
         JPanel panel=new JPanel();
         JButton button=new JButton("Check Odds");
-       button.setActionCommand("Check_Odds");
+        button.setActionCommand("Check_Odds");
         button.addActionListener(this);
         String[] teams = {
                 "Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens", "Buffalo Bills",
@@ -52,25 +25,27 @@ public class GUI implements ActionListener {
                 "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Commanders"
         };
 
-                teamsDropdown=new JComboBox<>(teams);
-
+        teamsDropdown=new JComboBox<>(teams);
         panel.add(teamsDropdown);
         panel.add(button);
         frame.add(panel);
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only this frame
         frame.setVisible(true);
-
-
+        panel.setBackground(Color.LIGHT_GRAY);
+        frame.add(panel);
+        frame.setSize(800, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 
+    public void displayResults(String[][] lol, String selectedTeam){
 
-    public void displayResults(String[][] lol){
 
-
-        JFrame frame=new JFrame();
+        JFrame frame=new JFrame(selectedTeam+" Odds");
         JPanel panel=new JPanel();
         JTextArea text=new JTextArea();
+        text.setEditable(false);
         int max= Integer.MIN_VALUE;
         String name="";
         for(int i=0;i<lol.length;i++){
@@ -95,25 +70,15 @@ public class GUI implements ActionListener {
     //Button Clicking Listener
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("TeamOption")){
-           teamOption();
-
-        }
-
         if(e.getActionCommand().equals("Check_Odds")){
             String selectedTeam = (String) teamsDropdown.getSelectedItem();
             bettingOnTeam a=new bettingOnTeam();
             String up=a.findingGame(selectedTeam);
             String[][] lol=a.neat(up,selectedTeam);
-            displayResults(lol);
-
-
+            displayResults(lol,selectedTeam);
 
         }
-
-
     }
-
 
     //Main Method
     public static void main(String[] args){
