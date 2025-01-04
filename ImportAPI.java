@@ -14,7 +14,9 @@ public class importAPI{
             connection.setRequestMethod("GET");
              reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         }catch(IOException e ){
-            System.out.println("IOException LOL");
+            System.out.println("Sorry could not connect. IOException found");
+        }catch(Exception e){
+            System.out.println("Sorry could not connect. Unknown Error");
         }
 
 
