@@ -3,6 +3,7 @@ import java.io.*;
 
 public class importAPI{
     URL url;
+    String pizza=null;
     HttpURLConnection connection;
      BufferedReader reader;
     public importAPI(String x){
